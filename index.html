@@ -1,0 +1,32 @@
+<!doctype html>
+<title>cccp example</title>
+<meta charset="utf-8">
+<script src="index.js"></script>
+<script>
+if (window.fetch && window.cccp) {
+	// change all background-color declarations to green
+	const plugin = {
+		decl(node) {
+			if (node.prop === 'background-color') {
+				node.value = 'green';
+			}
+		}
+	};
+
+	fetch('index.json').then(
+		// fetch example.json as json
+		(content) => content.json()
+	).then(
+		// process json as <style>
+		(data) => cccp.render(
+			data,
+			[
+				plugin
+			]
+		)
+	)
+}
+</script>
+<h1>cccp example</h1>
+<p>This example fetches the styles of <code>index.json</code> and processes them into a <code>&lt;style&gt;</code> element using <strong>cccp</strong>.</p>
+<p>The styles are originally <code>@media (min-width: 600px) { body { background-color: blue; } }</code>, but a plugin modifies the styles so that instead the background is green.</p>
